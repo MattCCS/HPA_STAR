@@ -3,6 +3,7 @@ Relatively fast utilities for generating large coordinate sets
 for use in pathfinding and game grid management.
 """
 
+
 def cardinal_neighbors(coord):
     """
     Generates all coordinates in a cardinal direction
@@ -13,10 +14,11 @@ def cardinal_neighbors(coord):
     for i in xrange(len(coord)):
         val = coord[i]
         pre = coord[:i]
-        post = coord[i+1:]
-        points.add(pre + (val-1,) + post)
-        points.add(pre + (val+1,) + post)
+        post = coord[i + 1:]
+        points.add(pre + (val - 1,) + post)
+        points.add(pre + (val + 1,) + post)
     return points
+
 
 def all_coords(min_maxes):
     """
@@ -37,12 +39,14 @@ def all_coords(min_maxes):
             for i in xrange(min_, max_):
                 yield (i,) + coord
 
+
 def is_edge(coord, min_maxes):
     """
     Tests whether the coord is an edge
     in the given N-dimensional min_maxes.
     """
-    return any(v == a or v == b-1 for v,(a,b) in zip(coord, min_maxes))
+    return any((v == a or v == b - 1) for v, (a, b) in zip(coord, min_maxes))
+
 
 def edge_coords(min_maxes):
     """
