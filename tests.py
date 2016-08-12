@@ -26,22 +26,36 @@ for each in BLOCKED:
 
 print m.graph
 
-print m.contains((0,0))
-print m.contains((3,7))
-print m.contains((9,9))
-print m.contains((10,10))
-print m.contains((3,17))
-print m.contains((-5,0))
+print m.contains((0, 0))
+print m.contains((3, 7))
+print m.contains((9, 9))
+print m.contains((10, 10))
+print m.contains((3, 17))
+print m.contains((-5, 0))
 
 t0 = time.time()
-out = m.path((2,4), (8,5))
+out = m.path((2, 4), (8, 5))
 t1 = time.time()
-print t1-t0
+print t1 - t0
 print
+pr.print_stats()
 
 if not out:
     print "No path!"
 else:
     print list(out)
 
-print m.calculate_local_zones()
+print
+print m.groups
+print m.landlocked_groups
+print m.open_groups
+t0 = time.time()
+m.calculate_local_groups()
+t1 = time.time()
+print t1 - t0
+print
+print m.groups
+print m.landlocked_groups
+print m.open_groups
+
+print m.groups[0] is m.open_groups[0]
