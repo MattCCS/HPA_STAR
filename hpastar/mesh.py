@@ -5,8 +5,8 @@
 import abc
 
 # custom
-from HPA_STAR import pathfinding_utils
-from HPA_STAR import coordinate_utils
+from hpastar import pathfinding_utils
+from hpastar import coordinate_utils
 
 
 ####################################
