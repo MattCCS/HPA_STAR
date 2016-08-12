@@ -5,8 +5,9 @@
 import abc
 
 # custom
-from pyz.pathfinding import pathfinding_utils
-from pyz.pathfinding import coordinate_utils
+from HPA_STAR import pathfinding_utils
+from HPA_STAR import coordinate_utils
+
 
 ####################################
 
@@ -18,26 +19,25 @@ class Mesh(object):
         assert len(dimensions) == len(corner)
 
         self.mins = tuple(corner)
-        self.maxs = tuple(a+b for a,b in zip(dimensions, corner))
+        self.maxs = tuple(a + b for a, b in zip(dimensions, corner))
 
     def all_coords(self):
         return coordinate_utils.all_coords(zip(self.mins, self.maxs))
 
     def contains(self, coord):
-        return all(a <= v < b for a,v,b in zip(self.mins, coord, self.maxs))
+        return all(a <= v < b for a, v, b in zip(self.mins, coord, self.maxs))
 
     @abc.abstractmethod
     def path(self, start, end):
         pass
 
-####################################
 
 class MeshLeaf(Mesh):
 
     def __init__(self, dimensions, corner, graph):
         Mesh.__init__(self, dimensions, corner)
 
-        self.graph = graph # {coord -> set(coords)} # navigable
+        self.graph = graph  # {coord -> set(coords)} # navigable
         self.edges = coordinate_utils.edge_coords(zip(self.mins, self.maxs))
 
         self.groups = {}
@@ -48,7 +48,7 @@ class MeshLeaf(Mesh):
         self.paths = {}
 
     def make_open(self):
-        self.graph = {coord:self.potential_neighbors(coord) for coord in self.all_coords()}
+        self.graph = {coord: self.potential_neighbors(coord) for coord in self.all_coords()}
 
     def make_closed(self):
         self.graph = {}
@@ -82,7 +82,7 @@ class MeshLeaf(Mesh):
         return set(self.graph.keys())
 
     def edges(self):
-        return 
+        raise NotImplementedError()
 
     def cost(self, coord_1, coord_2):
         return 1  # stub.
@@ -106,8 +106,8 @@ class MeshLeaf(Mesh):
         remaining = self.navigable()
 
         if not remaining:
-            return # completely non-navigable
-        
+            return  # completely non-navigable
+
         groups = {}
         label = 0
         while remaining:
@@ -121,7 +121,7 @@ class MeshLeaf(Mesh):
         landlocked = {}
         open_groups = {}
 
-        for (label,group) in groups.items():
+        for (label, group) in groups.items():
             if not group & self.edges:
                 landlocked[label] = group
             else:
@@ -133,4 +133,3 @@ class MeshLeaf(Mesh):
 
     def calculate_potential_links(self, group_label):
         return self.open_groups[group_label] & self.edges
-
