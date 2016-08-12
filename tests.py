@@ -3,11 +3,11 @@
 import time
 
 # custom
-from pyz.pathfinding import mesh
+from HPA_STAR import mesh
 
 ####################################
 
-m = mesh.MeshLeaf((10,10), (0,0), {})
+m = mesh.MeshLeaf((10, 10), (0, 0), {})
 m.make_open()
 BLOCKED = [
     (1, 7), (1, 8), (2, 7), (2, 8), (3, 7), (3, 8),
@@ -19,7 +19,7 @@ BLOCKED = [
     (5, 7), (5, 8), (6, 2), (6, 3),
     (6, 4), (6, 5), (6, 6), (6, 7),
     (7, 3), (7, 4), (7, 5)
-] # try toggling (5,3)  ;)
+]  # try toggling (5, 3)  ;)
 
 for each in BLOCKED:
     m.add_blocked(each)
